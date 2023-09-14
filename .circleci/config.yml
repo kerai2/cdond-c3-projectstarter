@@ -137,10 +137,6 @@ jobs:
               ]
             }
           event: always
-workflows:
-  send-notification:
-    jobs:
-      - notify
 
 
 workflows:
@@ -156,4 +152,5 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
+      - notify
 
