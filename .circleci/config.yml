@@ -128,11 +128,6 @@ jobs:
             channel: C05T1M7GVNC
             event: fail
             template: basic_fail_1
-workflows:
-  deploy_and_notify:
-    jobs:
-      - deploy:
-          context: slack-secrets
 
 
 workflows:
@@ -148,3 +143,7 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
+  deploy_and_notify:
+    jobs:
+      - deploy:
+          context: slack-secrets
