@@ -89,6 +89,7 @@ jobs:
             npm install
             ## npm install oauth-sign@^0.9.0
             npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
             ## If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit --audit-level=critical
             
@@ -109,35 +110,9 @@ jobs:
             npm install
             ## npm install oauth-sign@^0.9.0
             npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
             ## If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit --audit-level=critical
-  
-
-orbs:
-  slack: circleci/slack@4.9.3
-jobs:
-  notify:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
-
 
 workflows:
   default:
@@ -152,5 +127,5 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - notify
+  
 
