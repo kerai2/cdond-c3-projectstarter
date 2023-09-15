@@ -96,7 +96,7 @@ jobs:
             ## If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit --audit-level=critical
       - slack/notify:
-          channel: C05T1M7GVNC
+          channel: $SLACK_DEFAULT_CHANNEL
           event: fail
           template: basic_fail_1
             
@@ -121,7 +121,7 @@ jobs:
             ## If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit --audit-level=critical
       - slack/notify:
-          channel: C05T1M7GVNC
+          channel: $SLACK_DEFAULT_CHANNEL
           event: fail
           template: basic_fail_1
 
