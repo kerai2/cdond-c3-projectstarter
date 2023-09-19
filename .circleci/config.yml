@@ -139,8 +139,8 @@ jobs:
       - run:
           name: Install tar and gzip
           command: |
-            apt-get install tar
-            apt-get install gzip
+            yum -y install tar
+            yum -y install gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -163,7 +163,7 @@ jobs:
             # Your code here
             echo "[all]" > inventory
             aws ec2 describe-instances \
- 	            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text >> inventory
 
       - persist_to_workspace:
