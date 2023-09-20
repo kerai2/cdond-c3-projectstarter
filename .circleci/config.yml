@@ -192,7 +192,7 @@ jobs:
           name: Install dependencies
           command: |
             # Your code here
-            apt-get update -y
+            apk update && apk upgrade --no-cache
             apk add --no-cache python3 py3-pip
             apk add --update ansible
             apk add tar
