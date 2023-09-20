@@ -178,13 +178,13 @@ jobs:
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
+      # - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - checkout
       # Add ssh keys with fingerprint
       - add_ssh_keys:
-           fingerprints: 
-             - "d1:71:d4:37:68:64:71:43:9a:fc:9a:b4:70:c9:78:4f"
+           fingerprints: ["d1:71:d4:37:68:64:71:43:9a:fc:9a:b4:70:c9:78:4f"]
       # attach workspace
       - attach_workspace:
            at: ~/
