@@ -192,14 +192,17 @@ jobs:
           name: Install dependencies
           command: |
             # Your code here
-            apk add --update ansible
-            apk add tar
-            apk add gzip
-            pip install awscli
+            # apk add --update ansible
+            # apk add tar
+            # apk add gzip
+            # pip install awscli
+            apt-get update -y
+            apt install ansible -y
+            apt install tar gzip -y
+
       - run:
           name: Configure server
           command: |
-            ssh-keyscan host | ssh-keygen -lf -
             pwd
             ls
             cd .circleci/ansible
