@@ -192,12 +192,11 @@ jobs:
           name: Install dependencies
           command: |
             # Your code here
-            apk update && apk upgrade --no-cache
+            # apk update && apk upgrade --no-cache
             apk add --update ansible
-            # apk add --no-cache python3 py3-pip
             apk add --update ansible
-            apk add tar
-            apk add gzip
+            apk add --update tar
+            apk add --update gzip
             pip install awscli
 
       - run:
