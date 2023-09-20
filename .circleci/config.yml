@@ -183,7 +183,8 @@ jobs:
       - checkout
       # Add ssh keys with fingerprint
       - add_ssh_keys:
-           fingerprints: ["82:e6:92:95:bb:6b:01:03:b9:b9:9d:36:b1:30:de:d2"]
+           fingerprints: 
+             - "82:e6:92:95:bb:6b:01:03:b9:b9:9d:36:b1:30:de:d2"
       # attach workspace
       - attach_workspace:
            at: ~/
@@ -194,9 +195,11 @@ jobs:
             apk add --update ansible
             apk add tar
             apk add gzip
+            pip install awscli
       - run:
           name: Configure server
           command: |
+            ssh-keyscan host | ssh-keygen -lf -
             pwd
             ls
             cd .circleci/ansible
