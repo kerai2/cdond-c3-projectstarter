@@ -5,14 +5,30 @@
     src: /root/project/artifact.tar.gz
     dest: /home/ubuntu
 
-name: "update apt packages."
+- name: "update apt packages"
   become: true
   apt:
     update_cache: yes
-- name: "upgrade packages."
+   
+- name: "upgrade packages"
   become: true
   apt:
     upgrade: yes
+
+- name: "install dependencies."
+  become: true
+  apt:
+    name: [ "curl", "nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "install pm2"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
 
 - name: start app
   become: yes
