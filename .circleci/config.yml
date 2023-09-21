@@ -352,18 +352,33 @@ jobs:
       - image: alpine:latest
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            apk update && apk upgrade --no-cache
+            apk add --update ansible
+            apk add --update tar
+            apk add --update gzip
+            pip install awscli
+            apk add --update nodejs
+            apk add --update npm
       - run:
           name: Get backend url
           command: |
-            # your code here
+            export BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            echo $BACKEND_IP
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "${API_URL}"         
       - run:
           name: Backend smoke test.
           command: |
-            # your code here
+            if curl "${API_URL}/api/status" | grep "ok"
+            then
+                return 0
+            else
+                return 1
+            fi
       - run:
           name: Frontend smoke test.
           command: |
