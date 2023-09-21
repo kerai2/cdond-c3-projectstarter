@@ -238,15 +238,6 @@ jobs:
           name: echo variables
           command: |
              printenv
-            # echo $TYPEORM_CONNECTION 
-             #- TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
-             #- TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
-             #- TYPEORM_PORT: 5432
-             #- TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}"
-             #- TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}"
-             #- TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
-             #- TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
-             #- TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
       - run:
           name: install dependencies
           command: |
@@ -278,23 +269,20 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       - checkout
       - run:
           name: Install dependencies
           command: |
-            echo installing tar
-            yum -y install tar
-            echo installing gzip
-            yum -y install gzip
-            echo installing ansible
-            yum -y install ansible
-            echo installing nodejs
-            yum -y install nodejs
-            echo installing npm
-            yum -y install npm
+            apk update && apk upgrade --no-cache
+            apk add --update ansible
+            apk add --update tar
+            apk add --update gzip
+            pip install awscli
+            apk add --update nodejs
+            apk add --update npm
       - attach_workspace:
           at: ~/
       - run:
@@ -333,8 +321,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # Your code here
-            # apk update && apk upgrade --no-cache
+            apk update && apk upgrade --no-cache
             apk add --update ansible
             apk add --update tar
             apk add --update gzip
