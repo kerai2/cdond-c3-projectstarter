@@ -285,10 +285,15 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            echo installing tar
             yum -y install tar
+            echo installing gzip
             yum -y install gzip
+            echo installing ansible
             yum -y install ansible
+            echo installing nodejs
             yum -y install nodejs
+            echo installing npm
             yum -y install npm
       - attach_workspace:
           at: ~/
