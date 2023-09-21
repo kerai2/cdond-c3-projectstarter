@@ -15,6 +15,21 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
             # exit 1
 
+  revert-migrations:
+  description: Revert migration   
+  steps:
+    - run:
+        name: Revert migrations
+        when: on_fail
+        command: |
+          SUCCESS=$(curl -k https://kvdb.io/Xx6iJbjBdtNQZ2wDzQC8sF/migration_${CIRCLE_WORKFLOW_ID:0:7})
+          if (( $SUCCESS == 1 ));
+          then
+            cd ~/project/backend
+            npm install
+            npm run migration:revert
+          fi 
+
 jobs:
   build-frontend:
     docker:
@@ -222,7 +237,8 @@ jobs:
       - run:
           name: echo variables
           command: |
-             echo $TYPEORM_CONNECTION 
+             printenv
+            # echo $TYPEORM_CONNECTION 
              #- TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
              #- TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
              #- TYPEORM_PORT: 5432
@@ -255,7 +271,8 @@ jobs:
             curl https://kvdb.io/Xx6iJbjBdtNQZ2wDzQC8sF/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
             # Here's where you will add some code to rollback on failure  
-            - destroy-environment
+      - destroy-environment
+      - revert-migrations
   
   deploy-frontend:
     docker:
