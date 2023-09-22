@@ -398,6 +398,36 @@ jobs:
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - revert-migrations
+
+  cloudfront-update:
+    docker:
+      # Lightweight Docker image
+      - image: alpine:latest
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk update && apk upgrade --no-cache
+            apk add --update ansible
+            apk add --update tar
+            apk add --update gzip
+            pip install awscli
+            apk add --update nodejs
+            apk add --update npm
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+          --template-file .circleci/files/cloudfront.yml \
+          --stack-name InitialStack \
+          --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+          --tags project=udapeople
+      # Here's where you will add some code to rollback on failure  
+      - destroy-environment
+      - revert-migrations
+
       
 workflows:
   default:
