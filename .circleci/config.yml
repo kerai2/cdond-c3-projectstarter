@@ -363,8 +363,9 @@ jobs:
             apk add --update tar
             apk add --update gzip
             pip install awscli
-            apk add --update nodejs
-            apk add --update npm
+            apk add curl
+            # apk add --update nodejs
+            # apk add --update npm
       - run:
           name: Get backend url
           command: |
@@ -414,8 +415,9 @@ jobs:
             apk add --update tar
             apk add --update gzip
             pip install awscli
-            apk add --update nodejs
-            apk add --update npm
+            apk add curl
+            # apk add --update nodejs
+            # apk add --update npm
       - run:
           name: Update cloudfront distribution
           command: |
@@ -483,3 +485,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-frontend, deploy-backend]
+      # - cloudfront-update:
+      #    requires: [smoke-test]
+      # - cleanup:
+      #    requires: [cloudfront-update]
