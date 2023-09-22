@@ -351,7 +351,7 @@ jobs:
   smoke-test:
     docker:
       # Lightweight Docker image
-      - image: alpine:latest
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       - checkout
@@ -402,7 +402,7 @@ jobs:
   cloudfront-update:
     docker:
       # Lightweight Docker image
-      - image: alpine:latest
+      - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       - checkout

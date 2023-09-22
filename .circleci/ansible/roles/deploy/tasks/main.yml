@@ -1,5 +1,5 @@
 ---
-- name: extract artifact.tar
+- name: extract artifact
   become: yes
   unarchive:
     src: ~/project/artifact.tar.gz
@@ -7,7 +7,7 @@
     remote_src: no
     mode: 0755
 
-- name: Install packages based on package.json.
+- name: Install variables and start app
   npm:
     path: /home/ubuntu
 
