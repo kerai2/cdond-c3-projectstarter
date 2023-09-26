@@ -467,24 +467,24 @@ jobs:
             #  else
             #    echo Nothing to remove................
             #  fi
-            echo OldWorkflowID: "${OldWorkflowID}"
-             
-            echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-
-            echo Stack names: "${STACKS[@]}"
-
-            for OldWorkflowID in "${STACKS[@]}"; do
-              if [[ $OldWorkflowID =~ "${CIRCLE_WORKFLOW_ID:0:7}" ]]
-              then
-                echo ------ Nothing to cleanup - "Current: $OldWorkflowID" ------ 
-              else
-                echo ------ Cleaning up old jobs ------ 
-                export OldId=${OldWorkflowID:10:07}
-                aws s3 rm "s3://udapeople-${OldId}" --recursive
-                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldId}"
-                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldId}"
-              fi
-            done
+              echo OldWorkflowID: "${OldWorkflowID}"
+               
+              echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
+  
+              echo Stack names: "${STACKS[@]}"
+  
+              for OldWorkflowID in "${STACKS[@]}"; do
+                if [[ $OldWorkflowID =~ "${CIRCLE_WORKFLOW_ID:0:7}" ]]
+                then
+                  echo ------ Nothing to cleanup - "Current: $OldWorkflowID" ------ 
+                else
+                  echo ------ Cleaning up old jobs ------ 
+                  export OldId=${OldWorkflowID:10:07}
+                  aws s3 rm "s3://udapeople-${OldId}" --recursive
+                  aws cloudformation delete-stack --stack-name "udapeople-backend-${OldId}"
+                  aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldId}"
+                fi
+              done
       
 workflows:
   default:
