@@ -181,6 +181,7 @@ jobs:
             # Your code here
             echo "[all]" > .circleci/ansible/inventory.txt
             aws ec2 describe-instances \
+              --filters "Name=tag-key,Values=project" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
