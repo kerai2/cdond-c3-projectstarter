@@ -418,6 +418,7 @@ jobs:
             # apk add --update npm
       - run:
           name: Update cloudfront distribution
+          no_output_timeout: 15m
           command: |
             aws cloudformation deploy \
              --template-file .circleci/files/cloudfront.yml \
